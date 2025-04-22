@@ -19,6 +19,7 @@ int *DecodeRbToNb(int *rbArr, int rbSize)
     {
         // Calculate binary digit and new carry
         int sum = rbArr[i] + carry;
+
         nbArr[i] = sum & 1; // Equivalent to sum mod 2
 
         // Calculate new carry
@@ -81,6 +82,7 @@ int main()
     rbArr[0][10] = 0;
     rbArr[0][11] = 1;
 
+    //-100-100100101
     rbArr[1][0] = -1;
     rbArr[1][1] = 0;
     rbArr[1][2] = 0;
@@ -94,6 +96,7 @@ int main()
     rbArr[1][10] = 0;
     rbArr[1][11] = 1;
 
+    //-100100-100-10-1
     rbArr[2][0] = -1;
     rbArr[2][1] = 0;
     rbArr[2][2] = 0;
