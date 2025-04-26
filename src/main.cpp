@@ -16,6 +16,7 @@ Library link: https://github.com/Arduino-IRremote/Arduino-IRremote
 */
 
 CRGB leds[64];
+int **rbArr = create2DArray(8, 8);
 
 void setup() 
 {
@@ -24,11 +25,10 @@ void setup()
   // Serial.println("Hello World!");
   // create 8x8 array
 
-  // int** rbArr = create2DArray(8, 8);
-
   FastLED.setBrightness(255);
 
   delay(3000);
+  seed2DArray(rbArr, 8, 8);
   FastLED.addLeds<WS2812B, FAST_LED_PIN, GRB>(leds, 64);
 }
 
@@ -36,6 +36,26 @@ uint8_t hue = 0;
 
 void loop() 
 {
-  fill_rainbow(leds, 64, hue, 7);
+  for (int i = 0; i < 8; i++)
+  {
+    for (int j = 0; j < 8; j++)
+    {
+      switch(rbArr[i][j])
+      {
+        case 1:
+          leds[j + (i * 8)] = CRGB::Blue;
+          break;
+        case 0:
+          leds[j + (i * 8)] = CRGB::Red;
+          break;
+        case -1:
+          leds[j + (i * 8)] = CRGB::Yellow;
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
   FastLED.show();
 }

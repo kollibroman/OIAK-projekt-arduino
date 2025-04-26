@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <FastLED.h>
 #include <IRremote.hpp>
+#include <Arduino.h>
 
 int* ConvertTo1DArray(int **arr, int rowsCount, int colCount)
 {
@@ -43,6 +44,18 @@ int** create2DArray(int rowsCount, int colCount)
 
     return arr;
 }
+
+void seed2DArray(int **arr, int rowsCount, int colCount)
+{
+    for (int i = 0; i < rowsCount; i++)
+    {
+        for (int j = 0; j < colCount; j++)
+        {
+            arr[i][j] = random(-1, 2);
+        }
+    }
+}
+
 void free2DArray(int **arr, int rowsCount)
 {
     for (int i = 0; i < rowsCount; i++)
