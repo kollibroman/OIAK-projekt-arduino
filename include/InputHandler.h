@@ -64,3 +64,17 @@ void free2DArray(int **arr, int rowsCount)
     }
     free(arr);
 }
+
+void SetCursor(int ledIndex, CRGB* leds)
+{
+    leds[ledIndex] = CRGB::White;
+}
+
+enum RemoteInput
+{
+    LEFT_ARROW,
+    RIGHT_ARROW,
+    UP_ARROW,
+    DOWN_ARROW,
+    OK_BUTTON
+};

@@ -1,8 +1,10 @@
 #include <Arduino.h>
 #include <FastLED.h>
 #include "InputHandler.h"
+#include "LedHandler.h"
 
 #define FAST_LED_PIN 11 
+#define REMOTE_PIN 3
 
 FASTLED_USING_NAMESPACE
 /*
@@ -24,8 +26,10 @@ void setup()
   Serial.begin(115200);
   // Serial.println("Hello World!");
   // create 8x8 array
+  IrReceiver.begin(REMOTE_PIN, ENABLE_LED_FEEDBACK);
+  pinMode(REMOTE_PIN, HEX);
 
-  FastLED.setBrightness(255);
+  FastLED.setBrightness(10);
 
   delay(3000);
   seed2DArray(rbArr, 8, 8);
@@ -33,29 +37,38 @@ void setup()
 }
 
 uint8_t hue = 0;
+int ledIndex = 0;
 
 void loop() 
 {
-  for (int i = 0; i < 8; i++)
+  if(IrReceiver.decode())
   {
-    for (int j = 0; j < 8; j++)
+    Serial.println(IrReceiver.decodedIRData.decodedRawData, HEX);
+    unsigned long key = IrReceiver.decodedIRData.decodedRawData;
+
+    switch(key)
     {
-      switch(rbArr[i][j])
-      {
-        case 1:
-          leds[j + (i * 8)] = CRGB::Blue;
-          break;
-        case 0:
-          leds[j + (i * 8)] = CRGB::Red;
-          break;
-        case -1:
-          leds[j + (i * 8)] = CRGB::Yellow;
-          break;
-        default:
-          break;
-      }
+      case 0xBB44FF00:
+        Serial.println("Left Arrow");
+        break;
+      case 0xBC43FF00:
+        Serial.println("Right Arrow");
+        break;
+      case 0xB946FF00:
+        Serial.println("Up Arrow");
+        break;
+      case 0xEA15FF00:
+        Serial.println("Down Arrow");
+        break;
+      case 0xBF40FF00:
+        Serial.println("OK Button");
+        break;
+      default:
+        Serial.println("Unknown Key");
     }
   }
 
-  FastLED.show();
+  PrintCurrentLEDStateColors(rbArr, leds, 8, 8);
+
+  delay(1000);
 }
