@@ -75,16 +75,22 @@ void loop()
         Serial.println("Up Arrow");
 
         ChangeValue(ledIndex, rbArr, REMOTE_INPUT::UP_ARROW);
+        DecodeAndPrint(rbArr, 8, leds);
+
         break;
       case 0x15:
         Serial.println("Down Arrow");
 
         ChangeValue(ledIndex, rbArr, REMOTE_INPUT::DOWN_ARROW);
+        DecodeAndPrint(rbArr, 8, leds);
+
         break;
       case 0x40:
         Serial.println("OK Button");
 
         ChangeValue(ledIndex, rbArr, REMOTE_INPUT::OK_BUTTON);
+        DecodeAndPrint(rbArr, 8, leds);
+
         break;
       default:
         Serial.println("Unknown Key");
@@ -92,7 +98,6 @@ void loop()
 
     IrReceiver.resume();
 
-    DecodeAndPrint(rbArr, 8, leds);
 
     PrintCurrentLEDStateColors(rbArr, leds, 8, 8);
     SetCursor(ledIndex, leds);

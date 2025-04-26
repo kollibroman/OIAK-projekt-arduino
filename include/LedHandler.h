@@ -76,9 +76,9 @@ void DecodeAndPrint(int **arr, int rbSize, CRGB *leds)
 
         else
         {
-            for (int j = 7; j >= 0; j++)
+            for (int j = 7; j >= 0; j--)
             {
-                arr[i][j] = nbArr[j];
+                arr[i][j] = nbArr[15-j];
             }
         }
     }
