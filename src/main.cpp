@@ -24,9 +24,9 @@ void setup()
   // Serial.println("Hello World!");
   // create 8x8 array
 
-  int** rbArr = create2DArray(8, 8);
+  // int** rbArr = create2DArray(8, 8);
 
-
+  FastLED.setBrightness(255);
 
   delay(3000);
   FastLED.addLeds<WS2812B, FAST_LED_PIN, GRB>(leds, 64);
