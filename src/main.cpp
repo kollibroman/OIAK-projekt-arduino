@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <FastLED.h>
+#include <IRremote.hpp>
 #include "InputHandler.h"
 #include "LedHandler.h"
 
@@ -22,13 +23,11 @@ int **rbArr = create2DArray(8, 8);
 
 void setup() 
 {
-  // Setup here
   Serial.begin(9600);
-  // Serial.println("Hello World!");
-  // create 8x8 array
-  IrReceiver.begin(REMOTE_PIN, ENABLE_LED_FEEDBACK);
   pinMode(REMOTE_PIN, INPUT);
 
+  IrReceiver.begin(REMOTE_PIN, ENABLE_LED_FEEDBACK);
+  
   FastLED.setBrightness(10);
 
   delay(300);
@@ -45,19 +44,24 @@ void loop()
 {
   if(IrReceiver.decode())
   {
+    Serial.print("RawData: 0x");
     Serial.println(IrReceiver.decodedIRData.decodedRawData, HEX);
-    unsigned long key = IrReceiver.decodedIRData.decodedRawData;
+
+    Serial.print("Command: 0x");
+    Serial.println(IrReceiver.decodedIRData.command, HEX);
+
+    unsigned long key = IrReceiver.decodedIRData.command;
     Serial.println(key, HEX);
     switch(key)
     {
-      case 0xBB44FF00:
+      case 0x44:
         Serial.println("Left Arrow");
         ledIndex > 0 ? ledIndex-- : ledIndex = 0;
         
         ResetLEDStateColors(rbArr, leds, 8, 8);
         SetCursor(ledIndex, leds);
         break;
-      case 0xBC43FF00:
+      case 0x43:
         Serial.println("Right Arrow");
         delay(10);
         ledIndex > 14 ? ledIndex = 0 : ledIndex++;
@@ -66,17 +70,17 @@ void loop()
         delay(10);
         SetCursor(ledIndex, leds);
         break;
-      case 0xB946FF00:
+      case 0x46:
         Serial.println("Up Arrow");
 
         ChangeValue(ledIndex, rbArr, leds, REMOTE_INPUT::UP_ARROW);
         break;
-      case 0xEA15FF00:
+      case 0x15:
         Serial.println("Down Arrow");
 
         ChangeValue(ledIndex, rbArr, leds, REMOTE_INPUT::DOWN_ARROW);
         break;
-      case 0xBF40FF00:
+      case 0x40:
         Serial.println("OK Button");
 
         ChangeValue(ledIndex, rbArr, leds, REMOTE_INPUT::OK_BUTTON);
@@ -84,10 +88,10 @@ void loop()
       default:
         Serial.println("Unknown Key");
     }
+
+    IrReceiver.resume();
+    PrintCurrentLEDStateColors(rbArr, leds, 8, 8);
+    SetCursor(ledIndex, leds);
   }
-
-  IrReceiver.resume();
-
-  PrintCurrentLEDStateColors(rbArr, leds, 8, 8);
-  SetCursor(ledIndex, leds);
+  
 }
