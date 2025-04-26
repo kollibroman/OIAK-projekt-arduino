@@ -52,18 +52,34 @@ void loop()
     {
       case 0xBB44FF00:
         Serial.println("Left Arrow");
+        ledIndex++;
+        
+        ResetLEDStateColors(rbArr, leds, 8, 8);
+        SetCursor(ledIndex, leds);
         break;
       case 0xBC43FF00:
         Serial.println("Right Arrow");
+        delay(10);
+        ledIndex > 0 ? ledIndex-- : ledIndex = 0;
+
+        ResetLEDStateColors(rbArr, leds, 8, 8);
+        delay(10);
+        SetCursor(ledIndex, leds);
         break;
       case 0xB946FF00:
         Serial.println("Up Arrow");
+
+        ChangeValue(ledIndex, rbArr, leds, REMOTE_INPUT::UP_ARROW);
         break;
       case 0xEA15FF00:
         Serial.println("Down Arrow");
+
+        ChangeValue(ledIndex, rbArr, leds, REMOTE_INPUT::DOWN_ARROW);
         break;
       case 0xBF40FF00:
         Serial.println("OK Button");
+
+        ChangeValue(ledIndex, rbArr, leds, REMOTE_INPUT::OK_BUTTON);
         break;
       default:
         Serial.println("Unknown Key");
@@ -71,5 +87,7 @@ void loop()
 
     IrReceiver.resume();
   }
+
   PrintCurrentLEDStateColors(rbArr, leds, 8, 8);
+  SetCursor(ledIndex, leds);
 }

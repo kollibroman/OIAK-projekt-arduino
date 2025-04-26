@@ -4,6 +4,15 @@
 #include <IRremote.hpp>
 #include <Arduino.h>
 
+enum REMOTE_INPUT
+{
+    LEFT_ARROW,
+    RIGHT_ARROW,
+    UP_ARROW,
+    DOWN_ARROW,
+    OK_BUTTON
+};
+
 int* ConvertTo1DArray(int **arr, int rowsCount, int colCount)
 {
     int *singleDArr = (int *)malloc(rowsCount * colCount * sizeof(int));
@@ -68,13 +77,33 @@ void free2DArray(int **arr, int rowsCount)
 void SetCursor(int ledIndex, CRGB* leds)
 {
     leds[ledIndex] = CRGB::White;
+    FastLED.show();
 }
 
-enum RemoteInput
+void ChangeValue(int ledIndex, int **rbArr, CRGB* leds, REMOTE_INPUT remote)
 {
-    LEFT_ARROW,
-    RIGHT_ARROW,
-    UP_ARROW,
-    DOWN_ARROW,
-    OK_BUTTON
-};
+    int* arr = ConvertTo1DArray(rbArr, 2, 8);
+
+    if (remote == REMOTE_INPUT::OK_BUTTON)
+    {
+        arr[ledIndex] = 0;
+        leds[ledIndex] = CRGB::Red;
+    }
+    else if (remote == REMOTE_INPUT::DOWN_ARROW)
+    {
+        arr[ledIndex] = -1;
+        leds[ledIndex] = CRGB::Yellow;
+    }
+
+    else if(remote == REMOTE_INPUT::UP_ARROW)
+    {
+        arr[ledIndex] = 1;
+        leds[ledIndex] = CRGB::Blue;
+    }
+
+    int rbXIndex = ledIndex > 7 ? ledIndex - 8 : ledIndex;
+    int rbYIndex = ledIndex > 7 ? 1 : 0;
+
+    rbArr[rbYIndex][rbXIndex] = arr[ledIndex];
+    free(arr);
+}
