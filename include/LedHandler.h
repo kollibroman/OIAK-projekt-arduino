@@ -10,13 +10,16 @@ void PrintCurrentLEDStateColors(int **arr, CRGB* leds, int rowsCount, int colCou
             switch (arr[i][j])
             {
                 case 1:
-                    leds[j + (i * 8)] = CRGB::Blue;
-                    break;
-                case 0:
                     leds[j + (i * 8)] = CRGB::Red;
                     break;
+                case 0:
+                    leds[j + (i * 8)] = CRGB::Green;
+                    break;
                 case -1:
-                    leds[j + (i * 8)] = CRGB::Yellow;
+                    leds[j + (i * 8)] = CRGB::Blue;
+                    break;
+                case 2:
+                    leds[j + (i * 8)] = CRGB::Purple;
                     break;
                 default:
                     break;
@@ -36,13 +39,16 @@ void ResetLEDStateColors(int **arr, CRGB *leds, int rowsCount, int colCount)
             switch (arr[i][j])
             {
             case 1:
-                leds[j + (i * 8)] = CRGB::Blue;
-                break;
-            case 0:
                 leds[j + (i * 8)] = CRGB::Red;
                 break;
+            case 0:
+                leds[j + (i * 8)] = CRGB::Black;
+                break;
             case -1:
-                leds[j + (i * 8)] = CRGB::Yellow;
+                leds[j + (i * 8)] = CRGB::Blue;
+                break;
+            case 2:
+                leds[j + (i * 8)] = CRGB::Purple;
                 break;
             default:
                 break;

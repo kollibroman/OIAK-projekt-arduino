@@ -52,6 +52,7 @@ void loop()
 
     unsigned long key = IrReceiver.decodedIRData.command;
     Serial.println(key, HEX);
+    
     switch(key)
     {
       case 0x44:
@@ -73,17 +74,17 @@ void loop()
       case 0x46:
         Serial.println("Up Arrow");
 
-        ChangeValue(ledIndex, rbArr, leds, REMOTE_INPUT::UP_ARROW);
+        ChangeValue(ledIndex, rbArr, REMOTE_INPUT::UP_ARROW);
         break;
       case 0x15:
         Serial.println("Down Arrow");
 
-        ChangeValue(ledIndex, rbArr, leds, REMOTE_INPUT::DOWN_ARROW);
+        ChangeValue(ledIndex, rbArr, REMOTE_INPUT::DOWN_ARROW);
         break;
       case 0x40:
         Serial.println("OK Button");
 
-        ChangeValue(ledIndex, rbArr, leds, REMOTE_INPUT::OK_BUTTON);
+        ChangeValue(ledIndex, rbArr, REMOTE_INPUT::OK_BUTTON);
         break;
       default:
         Serial.println("Unknown Key");

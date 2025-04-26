@@ -58,9 +58,28 @@ void seed2DArray(int **arr, int rowsCount, int colCount)
 {
     for (int i = 0; i < rowsCount; i++)
     {
-        for (int j = 0; j < colCount; j++)
+        if(i < 2)
         {
-            arr[i][j] = random(-1, 2);
+            for (int j = 0; j < colCount; j++)
+            {
+                arr[i][j] = 0;
+            }
+        }
+
+        else if(i > 1 && i < 6)
+        {
+            for (int j = 0; j < colCount; j++)
+            {
+                arr[i][j] = 2;
+            }
+        }
+
+        else
+        {
+            for (int j = 0; j < colCount; j++)
+            {
+                arr[i][j] = 0;
+            }
         }
     }
 }
@@ -80,25 +99,26 @@ void SetCursor(int ledIndex, CRGB* leds)
     FastLED.show();
 }
 
-void ChangeValue(int ledIndex, int **rbArr, CRGB* leds, REMOTE_INPUT remote)
+void ChangeValue(int ledIndex, int **rbArr, REMOTE_INPUT remote)
 {
     int* arr = ConvertTo1DArray(rbArr, 2, 8);
 
-    if (remote == REMOTE_INPUT::OK_BUTTON)
+    switch (remote)
     {
-        arr[ledIndex] = 0;
-        leds[ledIndex] = CRGB::Red;
-    }
-    else if (remote == REMOTE_INPUT::DOWN_ARROW)
-    {
-        arr[ledIndex] = -1;
-        leds[ledIndex] = CRGB::Yellow;
-    }
+        case REMOTE_INPUT::OK_BUTTON:
+            arr[ledIndex] = 0;
+            break;
 
-    else if(remote == REMOTE_INPUT::UP_ARROW)
-    {
-        arr[ledIndex] = 1;
-        leds[ledIndex] = CRGB::Blue;
+        case REMOTE_INPUT::DOWN_ARROW:
+            arr[ledIndex] = -1;
+            break;
+
+        case REMOTE_INPUT::UP_ARROW:
+            arr[ledIndex] = 1;
+            break;
+
+        default:
+            break;
     }
 
     int rbXIndex = ledIndex > 7 ? ledIndex - 8 : ledIndex;
