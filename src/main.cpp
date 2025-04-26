@@ -27,11 +27,11 @@ void setup()
   // Serial.println("Hello World!");
   // create 8x8 array
   IrReceiver.begin(REMOTE_PIN, ENABLE_LED_FEEDBACK);
-  pinMode(REMOTE_PIN, OUTPUT);
+  pinMode(REMOTE_PIN, INPUT);
 
   FastLED.setBrightness(10);
 
-  delay(3000);
+  delay(300);
   seed2DArray(rbArr, 8, 8);
   FastLED.addLeds<WS2812B, FAST_LED_PIN, GRB>(leds, 64);
   Serial.println("Setup done!");
@@ -71,6 +71,5 @@ void loop()
 
     IrReceiver.resume();
   }
-
   PrintCurrentLEDStateColors(rbArr, leds, 8, 8);
 }
