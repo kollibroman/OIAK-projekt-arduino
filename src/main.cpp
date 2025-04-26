@@ -52,7 +52,7 @@ void loop()
 
     unsigned long key = IrReceiver.decodedIRData.command;
     Serial.println(key, HEX);
-    
+
     switch(key)
     {
       case 0x44:
@@ -91,6 +91,9 @@ void loop()
     }
 
     IrReceiver.resume();
+
+    DecodeAndPrint(rbArr, 8, leds);
+
     PrintCurrentLEDStateColors(rbArr, leds, 8, 8);
     SetCursor(ledIndex, leds);
   }

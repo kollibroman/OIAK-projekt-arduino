@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <FastLED.h>
+#include <decoder.h>
 
 void PrintCurrentLEDStateColors(int **arr, CRGB* leds, int rowsCount, int colCount)
 {
@@ -55,4 +56,36 @@ void ResetLEDStateColors(int **arr, CRGB *leds, int rowsCount, int colCount)
             }
         }
     }
+}
+
+void DecodeAndPrint(int **arr, int rbSize, CRGB *leds)
+{
+    int* rbArr = ConvertTo1DArray(arr, 2, 8);
+
+    int* nbArr = DecodeRbToNb(rbArr, 16);
+
+    for (int i = 6; i < 8; i++)
+    {
+        if(i == 6)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                arr[i][j] = nbArr[j];
+            }
+        }
+
+        else
+        {
+            for (int j = 7; j >= 0; j++)
+            {
+                arr[i][j] = nbArr[j];
+            }
+        }
+    }
+
+    PrintCurrentLEDStateColors(arr, leds, 8, 8);
+
+    //Wycieką pamienci muwimy nie!!!
+    free(rbArr);
+    free(nbArr);
 }
