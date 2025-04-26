@@ -52,7 +52,7 @@ void loop()
     {
       case 0xBB44FF00:
         Serial.println("Left Arrow");
-        ledIndex++;
+        ledIndex > 0 ? ledIndex-- : ledIndex = 0;
         
         ResetLEDStateColors(rbArr, leds, 8, 8);
         SetCursor(ledIndex, leds);
@@ -60,7 +60,7 @@ void loop()
       case 0xBC43FF00:
         Serial.println("Right Arrow");
         delay(10);
-        ledIndex > 0 ? ledIndex-- : ledIndex = 0;
+        ledIndex > 14 ? ledIndex = 0 : ledIndex++;
 
         ResetLEDStateColors(rbArr, leds, 8, 8);
         delay(10);
@@ -84,9 +84,9 @@ void loop()
       default:
         Serial.println("Unknown Key");
     }
-
-    IrReceiver.resume();
   }
+
+  IrReceiver.resume();
 
   PrintCurrentLEDStateColors(rbArr, leds, 8, 8);
   SetCursor(ledIndex, leds);
