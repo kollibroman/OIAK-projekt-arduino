@@ -66,9 +66,9 @@ void loop()
       default:
         Serial.println("Unknown Key");
     }
+
+    IrReceiver.resume();
   }
 
   PrintCurrentLEDStateColors(rbArr, leds, 8, 8);
-
-  delay(1000);
 }
