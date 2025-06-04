@@ -92,7 +92,7 @@ bool checkForFrance(int *arr, int arr_length)
 {
     // Fr = 01000110 01110010
 
-    int fr[16] = {0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0};
+    int fr[16] = {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0};
 
     for (int i = 0; i < arr_length; i++)
     {
