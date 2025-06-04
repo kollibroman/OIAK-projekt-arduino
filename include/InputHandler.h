@@ -3,6 +3,7 @@
 #include <FastLED.h>
 #include <IRremote.hpp>
 #include <Arduino.h>
+#include "../include/decoder.h"
 
 enum REMOTE_INPUT
 {
@@ -13,7 +14,36 @@ enum REMOTE_INPUT
     OK_BUTTON
 };
 
-int* ConvertTo1DArray(int **arr, int rowsCount, int colCount)
+RBDigit* ConvertTo1DRBArray(int **arr, int rowsCount, int colCount)
+{
+    RBDigit* singleDArr = (RBDigit *)malloc(rowsCount * colCount * sizeof(RBDigit));
+
+    int singleDArrIndex = 0;
+
+    for (int i = 0; i < rowsCount; i++)
+    {
+        if(i % 2 == 0)
+        {
+            for (int j = 0; j < colCount; j++)
+            {
+                singleDArr[singleDArrIndex] = value_to_rb_digit(arr[i][j]);
+                singleDArrIndex++;
+            }
+        }
+
+        else
+        {
+            for (int j = (colCount - 1); j >= 0; j--)
+            {
+                singleDArr[singleDArrIndex] = value_to_rb_digit(arr[i][j]);
+                singleDArrIndex++;
+            }
+        }
+    }
+    return singleDArr;
+}
+
+int *ConvertTo1DArray(int **arr, int rowsCount, int colCount)
 {
     int *singleDArr = (int *)malloc(rowsCount * colCount * sizeof(int));
 
@@ -21,7 +51,7 @@ int* ConvertTo1DArray(int **arr, int rowsCount, int colCount)
 
     for (int i = 0; i < rowsCount; i++)
     {
-        if(i % 2 == 0)
+        if (i % 2 == 0)
         {
             for (int j = 0; j < colCount; j++)
             {

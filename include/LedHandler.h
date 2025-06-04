@@ -107,9 +107,9 @@ bool checkForFrance(int *arr, int arr_length)
 
 void DecodeAndPrint(int **arr, int rbSize, CRGB *leds)
 {
-    int* rbArr = ConvertTo1DArray(arr, 2, 8);
+    RBDigit *rbArr = ConvertTo1DRBArray(arr, 2, 8);
 
-    int* nbArr = DecodeRbToNb(rbArr, 16);
+    int* nbArr = rb_to_binary_serial(rbArr, 16, &rbSize);
 
     for (int i = 6; i < 8; i++)
     {

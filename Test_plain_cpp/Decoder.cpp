@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "../include/decoder.h"
 
 void PrintArray(int *arr, int size)
 {
@@ -73,11 +74,18 @@ int main()
     printf("Decoded Non-Redundant Binary Arrays:\n");
     for (int i = 0; i < 3; i++)
     {
-        int *nbArr = DecodeRbToNb(rbArr[i], rbSize);
+        RBDigit* rbDigit = (RBDigit*)malloc(rbSize * sizeof(RBDigit));
 
-        PrintArray(nbArr, rbSize);
+        for (int j = 0; j < rbSize; j++)
+        {
+            rbDigit[j] = value_to_rb_digit(rbArr[i][j]);
+        }
+
+
+
+        PrintArray(rb_to_binary_serial(rbDigit, rbSize, &rbSize), rbSize);
         printf("\n");
-        free(nbArr); 
+        free(rbDigit); 
     }
 
         return 0;
