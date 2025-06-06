@@ -2,7 +2,7 @@
 #define DECODER_H
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h> 
 
 // Struktura reprezentująca cyfrę RB
 typedef struct 

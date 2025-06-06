@@ -2,7 +2,35 @@
 #include <FastLED.h>
 #include <decoder.h>
 
-void PrintCurrentLEDStateColors(int **arr, CRGB* leds, int rowsCount, int colCount)
+void PrintFranceFlag(CRGB *leds)
+{
+    // France flag colors
+    CRGB blue = CRGB::Blue;
+    CRGB white = CRGB::White;
+    CRGB red = CRGB::Red;
+
+    // Set the first 3 columns to blue, white, and red respectively
+    for (int i = 2; i <= 5; i++)
+    {
+        for (int j = 2; j <= 6; j++)
+        {
+            if (j < 4)
+            {
+                leds[j + (i * 8)] = blue; // Set blue for first column
+            }
+            else if (j >= 4 && j < 6)
+            {
+                leds[j + (i * 8)] = white; // Set white for second column
+            }
+            else
+            {
+                leds[j + (i * 8)] = red; // Set red for third column
+            }
+        }
+    }
+}
+
+void PrintCurrentLEDStateColors(int **arr, CRGB* leds, int rowsCount, int colCount, bool showFrance = false)
 {
     for (int i = 0; i < 8; i++)
     {
@@ -26,6 +54,11 @@ void PrintCurrentLEDStateColors(int **arr, CRGB* leds, int rowsCount, int colCou
                     break;
             }
         }
+    }
+
+    if(showFrance)
+    {
+        PrintFranceFlag(leds);
     }
 
     FastLED.show();
@@ -56,36 +89,6 @@ void ResetLEDStateColors(int **arr, CRGB *leds, int rowsCount, int colCount)
             }
         }
     }
-}
-
-void PrintFranceFlag(CRGB *leds)
-{
-    // France flag colors
-    CRGB blue = CRGB::Blue;
-    CRGB white = CRGB::White;
-    CRGB red = CRGB::Red;
-
-    // Set the first 3 columns to blue, white, and red respectively
-    for (int i = 2; i <= 5; i++)
-    {
-        for (int j = 2; j <= 6; j++)
-        {
-            if(j < 4)
-            {
-                leds[j + (i * 8)] = blue; // Set blue for first column
-            }
-            else if(j >=4 && j < 6)
-            {
-                leds[j + (i * 8)] = white; // Set white for second column
-            }
-            else
-            {
-                leds[j + (i * 8)] = red; // Set red for third column
-            }
-        }
-    }
-
-    FastLED.show();
 }
 
 bool checkForFrance(int *arr, int arr_length)
@@ -129,15 +132,10 @@ void DecodeAndPrint(int **arr, int rbSize, CRGB *leds)
             }
         }
     }
-
-    if(checkForFrance(nbArr, 16))
-    {
-        PrintFranceFlag(leds);
-    }
-    else
-    {
-        PrintCurrentLEDStateColors(arr, leds, 8, 8);
-    }
+    
+    ResetLEDStateColors(arr, leds, 8, 8);
+    
+    PrintCurrentLEDStateColors(arr, leds, 8, 8);
 
     //Wycieką pamienci muwimy nie!!!
     free(rbArr);
