@@ -7,15 +7,15 @@ void PrintFranceFlag(CRGB *leds, int **arr)
     // Set the first 3 columns to blue, white, and red respectively
     for (int i = 0; i <= 8; i++)
     {
-        for (int j = 2; j <= 6; j++)
+        for (int j = 1; j <= 6; j++)
         {
             if(arr[i][j] == 2)
             {
-                if (j < 4)
+                if (j < 3)
                 {
                     leds[j + (i * 8)] = CRGB::Blue; // Set blue for first column
                 }
-                else if (j >= 4 && j < 6)
+                else if (j >= 3 && j < 5)
                 {
                     leds[j + (i * 8)] = CRGB::White; // Set white for second column
                 }
@@ -130,8 +130,6 @@ void DecodeAndPrint(int **arr, int rbSize, CRGB *leds)
             }
         }
     }
-    
-    ResetLEDStateColors(arr, leds, 8, 8);
     
     PrintCurrentLEDStateColors(arr, leds, 8, 8, true);
 
