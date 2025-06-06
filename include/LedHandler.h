@@ -131,7 +131,7 @@ void DecodeAndPrint(int **arr, int rbSize, CRGB *leds)
         }
     }
     
-    PrintCurrentLEDStateColors(arr, leds, 8, 8, true);
+    PrintCurrentLEDStateColors(arr, leds, 8, 8, checkForFrance(nbArr, 16));
 
     //Wycieką pamienci muwimy nie!!!
     free(rbArr);

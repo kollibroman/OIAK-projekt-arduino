@@ -98,8 +98,13 @@ void loop()
 
     IrReceiver.resume();
 
+    RBDigit *rbDigArr = ConvertTo1DRBArray(rbArr, 2, 8);
 
-    PrintCurrentLEDStateColors(rbArr, leds, 8, 8);
+    int rbSize = 8;
+
+    int *nbArr = rb_to_binary_serial(rbDigArr, 16, &rbSize);
+
+    PrintCurrentLEDStateColors(rbArr, leds, 8, 8, checkForFrance(nbArr, 16));
     SetCursor(ledIndex, leds);
   }
   
