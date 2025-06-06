@@ -22,22 +22,10 @@ RBDigit* ConvertTo1DRBArray(int **arr, int rowsCount, int colCount)
 
     for (int i = 0; i < rowsCount; i++)
     {
-        if(i % 2 == 0)
+        for (int j = 0; j < colCount; j++)
         {
-            for (int j = 0; j < colCount; j++)
-            {
-                singleDArr[singleDArrIndex] = value_to_rb_digit(arr[i][j]);
-                singleDArrIndex++;
-            }
-        }
-
-        else
-        {
-            for (int j = (colCount - 1); j >= 0; j--)
-            {
-                singleDArr[singleDArrIndex] = value_to_rb_digit(arr[i][j]);
-                singleDArrIndex++;
-            }
+            singleDArr[singleDArrIndex] = value_to_rb_digit(arr[i][j]);
+            singleDArrIndex++;
         }
     }
     return singleDArr;
