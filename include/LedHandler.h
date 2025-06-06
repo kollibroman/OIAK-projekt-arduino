@@ -56,7 +56,13 @@ void PrintCurrentLEDStateColors(int **arr, CRGB* leds, int rowsCount, int colCou
 
     if(showFrance)
     {
+        Serial.println("France Detected");
         PrintFranceFlag(leds, arr);
+    }
+
+    else
+    {
+        Serial.println("France Not Detected");
     }
 
     FastLED.show();
