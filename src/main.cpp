@@ -100,7 +100,7 @@ void loop()
 
     RBDigit *rbDigArr = ConvertTo1DRBArray(rbArr, 2, 8);
 
-    int rbSize = 8;
+    int rbSize = 16;
 
     int *nbArr = rb_to_binary_serial(rbDigArr, 16, &rbSize);
 

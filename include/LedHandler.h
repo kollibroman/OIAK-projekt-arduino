@@ -104,19 +104,20 @@ bool checkForFrance(int *arr, int arr_length)
 
     for (int i = 0; i < arr_length; i++)
     {
-        index++;
-        if (arr[i] != fr[i])
+        Serial.println(arr[i]);
+        Serial.println(fr[i]);
+        if (i == 15) 
         {
+            return true;
+        }
+        if (arr[i] != fr[i])
+        {   
+            Serial.print("Croissant ");
+            Serial.println(i);
             return false;
         }
     }
-
-    if(index == 15)
-    {
-        return true;
-    }
-
-    return false;
+    return true;
 }
 
 void DecodeAndPrint(int **arr, int rbSize, CRGB *leds)
