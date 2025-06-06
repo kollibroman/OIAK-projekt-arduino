@@ -2,6 +2,23 @@
 #include <stdlib.h>
 #include "../include/decoder.h"
 
+bool checkForFrance(int *arr, int arr_length)
+{
+    // Fr = 01000110 01110010
+
+    int fr[16] = {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0};
+
+    for (int i = 0; i < arr_length; i++)
+    {
+        if (arr[i] != fr[i])
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 void PrintArray(int *arr, int size)
 {
     for (int i = 0; i < size; i++)
@@ -12,7 +29,7 @@ void PrintArray(int *arr, int size)
 int main()
 {
     //create 2d array with redundant numbers (one from article for test case)
-    int rbSize = 12;
+    int rbSize = 16;
     int **rbArr = (int **)malloc(rbSize * sizeof(int *));
     for (int i = 0; i < rbSize; i++)
     {
@@ -20,18 +37,22 @@ int main()
     }
 
     // 100100-100-101
-    rbArr[0][0] = 1;
-    rbArr[0][1] = 0;
+    rbArr[0][0] = 0;
+    rbArr[0][1] = 1;
     rbArr[0][2] = 0;
-    rbArr[0][3] = 1;
+    rbArr[0][3] = 0;
     rbArr[0][4] = 0;
-    rbArr[0][5] = 0;
-    rbArr[0][6] = -1;
+    rbArr[0][5] = 1;
+    rbArr[0][6] = 1;
     rbArr[0][7] = 0;
     rbArr[0][8] = 0;
-    rbArr[0][9] = -1;
-    rbArr[0][10] = 0;
+    rbArr[0][9] = 1;
+    rbArr[0][10] = 1;
     rbArr[0][11] = 1;
+    rbArr[0][12] = 0;
+    rbArr[0][13] = 0;
+    rbArr[0][14] = 1;
+    rbArr[0][15] = 0;
 
     //-100-100100101
     rbArr[1][0] = -1;
@@ -81,9 +102,11 @@ int main()
             rbDigit[j] = value_to_rb_digit(rbArr[i][j]);
         }
 
+        int *nbArr = rb_to_binary_serial(rbDigit, rbSize, &rbSize);
 
+        checkForFrance(nbArr, rbSize) ? printf("France Detected\n") : printf("France Not Detected\n");
 
-        PrintArray(rb_to_binary_serial(rbDigit, rbSize, &rbSize), rbSize);
+        PrintArray(nbArr, rbSize);
         printf("\n");
         free(rbDigit); 
     }

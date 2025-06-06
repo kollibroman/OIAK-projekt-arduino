@@ -104,7 +104,14 @@ void loop()
 
     int *nbArr = rb_to_binary_serial(rbDigArr, 16, &rbSize);
 
-    PrintCurrentLEDStateColors(rbArr, leds, 8, 8, checkForFrance(nbArr, 16));
+    bool isFrance = checkForFrance(nbArr, rbSize);
+
+    if(isFrance)
+    {
+      Serial.println("France Detected");
+    }
+
+    PrintCurrentLEDStateColors(rbArr, leds, 8, 8, isFrance);
     SetCursor(ledIndex, leds);
   }
   
