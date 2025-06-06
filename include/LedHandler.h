@@ -2,29 +2,27 @@
 #include <FastLED.h>
 #include <decoder.h>
 
-void PrintFranceFlag(CRGB *leds)
+void PrintFranceFlag(CRGB *leds, int **arr)
 {
-    // France flag colors
-    CRGB blue = CRGB::Blue;
-    CRGB white = CRGB::White;
-    CRGB red = CRGB::Red;
-
     // Set the first 3 columns to blue, white, and red respectively
-    for (int i = 2; i <= 5; i++)
+    for (int i = 0; i <= 8; i++)
     {
         for (int j = 2; j <= 6; j++)
         {
-            if (j < 4)
+            if(arr[i][j] == 2)
             {
-                leds[j + (i * 8)] = blue; // Set blue for first column
-            }
-            else if (j >= 4 && j < 6)
-            {
-                leds[j + (i * 8)] = white; // Set white for second column
-            }
-            else
-            {
-                leds[j + (i * 8)] = red; // Set red for third column
+                if (j < 4)
+                {
+                    leds[j + (i * 8)] = CRGB::Blue; // Set blue for first column
+                }
+                else if (j >= 4 && j < 6)
+                {
+                    leds[j + (i * 8)] = CRGB::White; // Set white for second column
+                }
+                else
+                {
+                    leds[j + (i * 8)] = CRGB::Red; // Set red for third column
+                }
             }
         }
     }
@@ -58,7 +56,7 @@ void PrintCurrentLEDStateColors(int **arr, CRGB* leds, int rowsCount, int colCou
 
     if(showFrance)
     {
-        PrintFranceFlag(leds);
+        PrintFranceFlag(leds, arr);
     }
 
     FastLED.show();
@@ -135,7 +133,7 @@ void DecodeAndPrint(int **arr, int rbSize, CRGB *leds)
     
     ResetLEDStateColors(arr, leds, 8, 8);
     
-    PrintCurrentLEDStateColors(arr, leds, 8, 8);
+    PrintCurrentLEDStateColors(arr, leds, 8, 8, true);
 
     //Wycieką pamienci muwimy nie!!!
     free(rbArr);
