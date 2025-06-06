@@ -94,16 +94,23 @@ bool checkForFrance(int *arr, int arr_length)
     // Fr = 01000110 01110010
 
     int fr[16] = {0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0};
+    int index = 0;
 
     for (int i = 0; i < arr_length; i++)
     {
+        index++;
         if (arr[i] != fr[i])
         {
             return false;
         }
     }
 
-    return true;
+    if(index == 15)
+    {
+        return true;
+    }
+
+    return false;
 }
 
 void DecodeAndPrint(int **arr, int rbSize, CRGB *leds)
