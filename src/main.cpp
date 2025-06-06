@@ -112,6 +112,10 @@ void loop()
     }
 
     PrintCurrentLEDStateColors(rbArr, leds, 8, 8, isFrance);
+
+    free(nbArr);
+    free(rbDigArr);
+
     SetCursor(ledIndex, leds);
   }
   
